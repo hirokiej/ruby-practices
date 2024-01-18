@@ -1,3 +1,5 @@
+#!/Users/hiroki/.rbenv/shims/ruby
+
 require "optparse"
 require "date"
 
