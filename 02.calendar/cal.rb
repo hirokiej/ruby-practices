@@ -1,18 +1,24 @@
 require "optparse"
 require "date"
 
-opt = OptionParser.new
+options = {}
 
-opt.on('-y'){}
-opt.on('-m'){}
+OptionParser.new do |opt|
 
+  opt.on('-y' , '--year YEAR', Integer, 'Specify the number of year:y(default: current year)') do |year|
+    options[:year] = year
+  end
+  opt.on('-m' , '--month MONTH', Integer,'Specify the number of month:m(default: current month)') do |month|
+    options[:month] = month
+  end
 
+end.parse!
 
 #今日の年月日
-date = Date.today
+date =Date.today
 #今年と今月
-year = date.year
-month = date.month
+year = options[:year] || date.year
+month = options[:month]|| date.month
 
 #月初めから月末
 first_day = Date.new(year, month, 1)
@@ -41,4 +47,3 @@ whole_month.each do |single_day|
     print " "
   end
 end
-
