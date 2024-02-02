@@ -1,4 +1,4 @@
-#!/Users/hiroki/.rbenv/shims/ruby
+#!/usr/bin/env ruby
 
 require 'optparse'
 require 'date'
@@ -14,36 +14,26 @@ OptionParser.new do |opt|
   end
 end.parse!
 
-# 今日の年月日
-date = Date.today
-# 今年と今月
-year = options[:year] || date.year
-month = options[:month] || date.month
+today = Date.today
+year = options[:year] || today.year
+month = options[:month] || today.month
 
-# 月初めから月末
 first_day = Date.new(year, month, 1)
 last_day = Date.new(year, month, -1)
-# 1ヶ月分の日にち
-whole_month = (first_day..last_day).to_a
+whole_month = (first_day..last_day)
 
-# 年と月
-y_m = [Date::MONTHNAMES[month], year].join(' ')
-# 曜日
-weekd = Date::ABBR_DAYNAMES.map { |day| day[0, 2] }.join(' ')
+y_m = first_day.strftime('%B %Y')
+day_name = Date::ABBR_DAYNAMES.map { |day| day[0, 2] }.join(' ')
 
-# 年月と曜日の出力
 puts y_m.center(20)
-puts weekd
-
-# 1日の位置調整
+puts day_name
 print '   ' * first_day.wday
 
-# 1ヶ月間の日にち
-whole_month.each do |single_day|
-  if single_day.wday == 6
-    puts single_day.day.to_s.rjust(2)
+whole_month.each do |date|
+  if date.saturday?
+    puts date.day.to_s.rjust(2)
   else
-    print single_day.day.to_s.rjust(2)
+    print date.day.to_s.rjust(2)
     print ' '
   end
 end
