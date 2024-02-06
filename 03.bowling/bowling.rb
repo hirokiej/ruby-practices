@@ -20,10 +20,10 @@ end
 point = 0
 
 frames.each_with_index do |frame, index|
-  if frame == [10, 0] && index < 10 # 9フレームまでのストライクボーナス
+  if frame == [10, 0]
     point += 10 + frames[index + 1].sum
     point += frames[index + 2][0] if frames[index + 1] == [10, 0]
-  elsif frame.sum == 10 && index < 10 # 9フレームまでのスペアボーナス
+  elsif frame.sum == 10
     point += frame.sum + frames[index + 1][0]
   else
     point += frame.sum
