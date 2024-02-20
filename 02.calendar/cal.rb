@@ -20,7 +20,6 @@ month = options[:month] || today.month
 
 first_day = Date.new(year, month, 1)
 last_day = Date.new(year, month, -1)
-whole_month = (first_day..last_day)
 
 y_m = first_day.strftime('%B %Y')
 day_name = Date::ABBR_DAYNAMES.map { |day| day[0, 2] }.join(' ')
@@ -29,11 +28,11 @@ puts y_m.center(20)
 puts day_name
 print '   ' * first_day.wday
 
-whole_month.each do |date|
+(first_day..last_day).each do |date|
+  print date.day.to_s.rjust(2)
   if date.saturday?
-    puts date.day.to_s.rjust(2)
+    puts
   else
-    print date.day.to_s.rjust(2)
     print ' '
   end
 end
