@@ -36,3 +36,4 @@ print '   ' * first_day.wday
     print ' '
   end
 end
+puts
