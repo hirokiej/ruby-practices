@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# 表示する列の数を定義
+COLUMN_NUMBER = 3
+
 # 配列の文字数を均一にする
 def format_file_name
-  files = Dir.glob("*")
+  files = Dir.glob('*')
   max_length = files.max_by(&:length).size
   files.map { |file| file.ljust(max_length + 1) }
 end
@@ -19,6 +22,6 @@ def change_array_number(display_number)
 end
 
 # 引数の数値で列数を変更
-change_array_number(3).each do |row|
+change_array_number(COLUMN_NUMBER).each do |row|
   puts row.join(' ')
 end
