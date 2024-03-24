@@ -16,22 +16,23 @@ opt.parse(ARGV)
 
 # 配列の文字数を均一にする
 def format_file_name(all_files)
-  files = all_files ? Dir.glob('*', File::FNM_DOTMATCH) : Dir.glob('*')
+  files = Dir.glob('*', all_files ? File::FNM_DOTMATCH : 0)
   max_length = files.max_by(&:length).size
   files.map { |file| file.ljust(max_length + 1) }
 end
 
 # 要素を display_number ずつに分けて縦表示対応した配列にする
-def change_array_number(display_number, all_files)
+def change_array_number(display_number, files)
   n = display_number
-  files = format_file_name(all_files)
   add_blank_element = n - (files.size % n)
   files += [''] * add_blank_element
   array_for_right_position = files.each_slice(files.size / n).to_a
   array_for_right_position.transpose
 end
 
+files = format_file_name(all_files)
+
 # 引数の数値で列数を変更
-change_array_number(COLUMN_NUMBER, all_files).each do |row|
+change_array_number(COLUMN_NUMBER, files).each do |row|
   puts row.join(' ')
 end
