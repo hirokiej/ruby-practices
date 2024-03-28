@@ -7,16 +7,23 @@ require 'optparse'
 COLUMN_NUMBER = 3
 
 all_files = false
+reverse_order = false
 
 opt = OptionParser.new
 opt.on('-a', '--all [ITEM]', 'show all items') do
   all_files = true
 end
+
+opt.on('-r', '--reverse [ITEM]', 'reverse order of items') do
+  reverse_order = true
+end
+
 opt.parse(ARGV)
 
 # 配列の文字数を均一にする
-def format_file_name(all_files)
+def format_file_name(all_files, reverse_order)
   files = Dir.glob('*', all_files ? File::FNM_DOTMATCH : 0)
+  files = files.reverse if reverse_order
   max_length = files.max_by(&:length).size
   files.map { |file| file.ljust(max_length + 1) }
 end
@@ -30,7 +37,7 @@ def change_array_number(display_number, files)
   array_for_right_position.transpose
 end
 
-files = format_file_name(all_files)
+files = format_file_name(all_files, reverse_order)
 
 # 引数の数値で列数を変更
 change_array_number(COLUMN_NUMBER, files).each do |row|
