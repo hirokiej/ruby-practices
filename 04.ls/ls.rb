@@ -73,6 +73,7 @@ end
 def long_format
   files = Dir.glob('*')
   max_length = max_length(files.map { |f| File.stat(f) })
+  puts "total #{files.size}"
   files.each do |file|
     stat = File.stat(file)
     filetype = FILETYPE[stat.mode.to_s(8)[0..1]]
@@ -82,7 +83,7 @@ def long_format
     group_name = Etc.getgrgid(stat.gid).name.rjust(max_length[:group])
     bite_size = stat.size.to_s.rjust(max_length[:size])
     update_time = stat.mtime.strftime('%-m %e %R')
-    puts "#{filetype}#{permission} #{hard_link} #{owner_name} #{group_name} #{bite_size}  #{update_time} #{file}"
+    puts "#{filetype}#{permission} #{hard_link} #{owner_name} #{group_name}  #{bite_size}  #{update_time} #{file}"
   end
 end
 
