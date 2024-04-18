@@ -70,8 +70,7 @@ def max_length(files_stats)
 end
 
 # -lの出力を作るメソッド
-def long_format
-  files = Dir.glob('*')
+def long_format(files)
   max_length = max_length(files.map { |f| File.stat(f) })
   puts "total #{files.size}"
   files.each do |file|
@@ -87,10 +86,14 @@ def long_format
   end
 end
 
-# 配列の文字数を均一にする
-def format_file_name(options)
+def get_files(options)
   files = Dir.glob('*', options[:all_files] ? File::FNM_DOTMATCH : 0)
   files = files.reverse if options[:reverse_order]
+  files
+end
+
+# 配列の文字数を均一にする
+def format_file_name(files)
   max_length = files.max_by(&:length).size
   files.map { |file| file.ljust(max_length + 1) }
 end
@@ -105,10 +108,11 @@ def change_array_number(display_number, files)
 end
 
 def main(options)
-  files = format_file_name(options)
-  if options[:detail_items] == true
-    long_format
+  files = get_files(options)
+  if options[:detail_items]
+    long_format(files)
   else
+    files = format_file_name(files)
     # 引数の数値で列数を変更
     change_array_number(COLUMN_NUMBER, files).each do |row|
       puts row.join(' ')
