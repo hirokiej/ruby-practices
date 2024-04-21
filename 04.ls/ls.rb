@@ -28,34 +28,16 @@ FILETYPE = {
   '14' => 's'
 }.freeze
 
-options = {
-  all_files: false,
-  reverse_order: false,
-  detail_items: false
-}
-opt = OptionParser.new
-opt.on('-a', '--all [ITEM]', 'show all items') do
-  options[:all_files] = true
-end
-
-opt.on('-r', '--reverse [ITEM]', 'reverse order of items') do
-  options[:reverse_order] = true
-end
-
-opt.on('-l', '--long [ITEM]', 'show detailed explanaion of items') do
-  options[:detail_items] = true
-end
-
-opt.parse(ARGV)
+params = ARGV.getopts('alr')
 
 # -lの最長可変数
-def max_length(files_stats)
+def max_length(files)
   hard_links = []
   owners = []
   groups = []
   sizes = []
 
-  files_stats.each do |file|
+  files.each do |file|
     hard_links << file.nlink.to_s
     owners << Etc.getpwuid(file.uid).name
     groups << Etc.getgrgid(file.gid).name
@@ -76,6 +58,7 @@ def long_format(files)
   files.each do |file|
     stat = File.stat(file)
     filetype = FILETYPE[stat.mode.to_s(8)[0..1]]
+    filetype = ' ' if filetype.nil?
     permission = stat.mode.to_s(8)[-3..].chars.map { |number| PERMISSION[number] }.join
     hard_link = stat.nlink.to_s.rjust(max_length[:link])
     owner_name = Etc.getpwuid(stat.uid).name.rjust(max_length[:owner])
@@ -86,9 +69,9 @@ def long_format(files)
   end
 end
 
-def get_files(options)
-  files = Dir.glob('*', options[:all_files] ? File::FNM_DOTMATCH : 0)
-  files = files.reverse if options[:reverse_order]
+def get_files(params)
+  files = Dir.glob('*', params['a'] ? File::FNM_DOTMATCH : 0)
+  files = files.reverse if params['r']
   files
 end
 
@@ -107,9 +90,9 @@ def change_array_number(display_number, files)
   array_for_right_position.transpose
 end
 
-def main(options)
-  files = get_files(options)
-  if options[:detail_items]
+def main(params)
+  files = get_files(params)
+  if params['l']
     long_format(files)
   else
     files = format_file_name(files)
@@ -120,4 +103,4 @@ def main(options)
   end
 end
 
-main(options)
+main(params)
