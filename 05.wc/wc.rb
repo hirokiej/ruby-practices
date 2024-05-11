@@ -5,19 +5,16 @@ require 'optparse'
 
 BLANK_WIDTH = 8
 
-params = ARGV.getopts('lwc')
+options = ARGV.getopts('lwc')
+default_options = { 'l' => true, 'w' => true, 'c' => true }
+options = default_options unless options['l'] || options['w'] || options['c']
 file_names = ARGV
 
-# オプションの有無による出力
-def output(params, line_count, word_count, byte_amount, file_name)
-  if !params['l'] && !params['w'] && !params['c']
-    print "#{line_count}#{word_count}#{byte_amount} #{file_name}"
-  else
-    print line_count if params['l']
-    print word_count if params['w']
-    print byte_amount if params['c']
-    print " #{file_name}"
-  end
+def output(options, line_count, word_count, byte_amount, file_name)
+  print line_count if options['l']
+  print word_count if options['w']
+  print byte_amount if options['c']
+  print " #{file_name}"
 end
 
 def wc(content)
@@ -28,12 +25,15 @@ def wc(content)
   { line_count: l_count, word_count: w_count, byte_amount: c_count }
 end
 
-# 通常のwcの出力
-def file_wc(file_name, params)
-  content = File.read(file_name)
-  input = wc(content)
-  output(params, input[:line_count], input[:word_count], input[:byte_amount], file_name)
-  puts ''
+def wc_for_file_lists(file_name)
+  content = file_name.empty? ? $stdin.read : File.read(file_name)
+  wc(content)
+end
+
+def output_last_result(file_name, options)
+  input = wc_for_file_lists(file_name)
+  output(options, input[:line_count], input[:word_count], input[:byte_amount], file_name.empty? ? '' : file_name)
+  puts '' if !file_name.empty?
 end
 
 def total_wc_files(file_names)
@@ -58,20 +58,13 @@ def total_wc(file_names)
   print ' total'
 end
 
-# パイプによる出力
-def pipe_with_wc(params)
-  content = $stdin.read
-  input = wc(content)
-  output(params, input[:line_count], input[:word_count], input[:byte_amount], '')
-end
-
-def main(params, file_names)
+def main(options, file_names)
   if file_names.empty?
-    pipe_with_wc(params)
+    output_last_result('', options)
   else
-    file_names.each { |file_name| file_wc(file_name, params) }
+    file_names.each { |file_name| output_last_result(file_name, options) }
     total_wc(file_names) if file_names.count >= 2
   end
 end
 
-main(params, file_names)
+main(options, file_names)
