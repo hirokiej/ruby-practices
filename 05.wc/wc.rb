@@ -10,49 +10,49 @@ default_options = { 'l' => true, 'w' => true, 'c' => true }
 options = default_options unless options['l'] || options['w'] || options['c']
 file_names = ARGV
 
-def output(options, line_count, word_count, byte_amount, file_name)
+def output_wc_info(options, line_count, word_count, byte_count, file_name)
   print line_count if options['l']
   print word_count if options['w']
-  print byte_amount if options['c']
+  print byte_count if options['c']
   print " #{file_name}"
 end
 
-def wc(content)
+def count_wc(content)
+  words = content.split(/\s+/).reject(&:empty?)
   l_count = content.count("\n").to_s.rjust(BLANK_WIDTH)
-  w_count = content.split(/\s+/).count.to_s.rjust(BLANK_WIDTH)
+  w_count = words.count.to_s.rjust(BLANK_WIDTH)
   c_count = content.bytesize.to_s.rjust(BLANK_WIDTH)
-
-  { line_count: l_count, word_count: w_count, byte_amount: c_count }
+  { line_count: l_count, word_count: w_count, byte_count: c_count }
 end
 
 def wc_for_file_lists(file_name)
   content = file_name.empty? ? $stdin.read : File.read(file_name)
-  wc(content)
+  count_wc(content)
 end
 
-def output_last_result(file_name, options)
+def output_file_lists(file_name, options)
   input = wc_for_file_lists(file_name)
-  output(options, input[:line_count], input[:word_count], input[:byte_amount], file_name.empty? ? '' : file_name)
-  puts '' if !file_name.empty?
+  output_wc_info(options, input[:line_count], input[:word_count], input[:byte_count], file_name.empty? ? '' : file_name)
+  puts unless file_name.empty?
 end
 
-def total_wc_files(file_names)
+def calculate_total_wc_files(file_names)
   total_l_count = 0
   total_w_count = 0
   total_c_count = 0
 
   file_names.each do |file_name|
     content = File.read(file_name)
-    input = wc(content)
+    input = count_wc(content)
     total_l_count += input[:line_count].to_i
     total_w_count += input[:word_count].to_i
-    total_c_count += input[:byte_amount].to_i
+    total_c_count += input[:byte_count].to_i
   end
   [total_l_count, total_w_count, total_c_count]
 end
 
-def total_wc(file_names)
-  total = total_wc_files(file_names)
+def output_total_wc(file_names)
+  total = calculate_total_wc_files(file_names)
   all_sum = total.map { |count| count.to_s.rjust(8) }.join
   print all_sum
   print ' total'
@@ -60,10 +60,10 @@ end
 
 def main(options, file_names)
   if file_names.empty?
-    output_last_result('', options)
+    output_file_lists('', options)
   else
-    file_names.each { |file_name| output_last_result(file_name, options) }
-    total_wc(file_names) if file_names.count >= 2
+    file_names.each { |file_name| output_file_lists(file_name, options) }
+    output_total_wc(file_names) if file_names.count >= 2
   end
 end
 
