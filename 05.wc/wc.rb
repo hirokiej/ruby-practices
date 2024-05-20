@@ -56,6 +56,7 @@ def output_total_wc(file_names)
   all_sum = total.map { |count| count.to_s.rjust(8) }.join
   print all_sum
   print ' total'
+  puts
 end
 
 def main(options, file_names)
