@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require_relative 'shot'
+
 class Frame
   attr_accessor :first_shot, :second_shot, :third_shot
 
