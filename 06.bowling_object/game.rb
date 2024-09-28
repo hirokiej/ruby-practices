@@ -28,13 +28,10 @@ class Game
 
   def create_frames(shots)
     shots[0..17].each_slice(2) do |first_mark, second_mark|
-      add_frame(first_mark, second_mark)
+      frame = Frame.new(first_mark, second_mark)
+      @frames << frame
     end
-    add_frame(shots[18], shots[19], shots[20])
-  end
-
-  def add_frame(first_mark, second_mark, third_mark = nil)
-    frame = Frame.new(first_mark, second_mark, third_mark)
+    frame = Frame.new(shots[18], shots[19], shots[20])
     @frames << frame
   end
 
