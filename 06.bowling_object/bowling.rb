@@ -5,4 +5,4 @@ require_relative 'game'
 
 game = Game.new(ARGV[0])
 
-puts game.cal_for_frames
+puts game.cal_total_score

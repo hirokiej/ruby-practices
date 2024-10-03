@@ -14,7 +14,7 @@ class Frame
     @third_shot = Shot.new(third_mark)
   end
 
-  def cal_for_frame
+  def cal_frame_score
     [@first_shot, @second_shot, @third_shot].map(&:score).sum
   end
 
@@ -23,7 +23,7 @@ class Frame
   end
 
   def spare?
-    !strike? && cal_for_frame == 10
+    !strike? && cal_frame_score == 10
   end
 
   def strike_bonus(index, next_frame, next_next_frame)
@@ -32,7 +32,7 @@ class Frame
     if strike? && next_frame.strike?
       20 + next_next_frame.first_shot.score
     else
-      10 + next_frame.cal_for_frame
+      10 + next_frame.cal_frame_score
     end
   end
 
