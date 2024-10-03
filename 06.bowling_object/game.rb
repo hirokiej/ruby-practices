@@ -6,6 +6,9 @@ require_relative 'frame'
 class Game
   attr_accessor :frames
 
+  LAST_FRAME = 9
+  LAST_FRAME_FIRST_SHOT = LAST_FRAME * 2
+
   def initialize(marks)
     @frames = []
     shots = remake_shots(marks)
@@ -18,7 +21,7 @@ class Game
     marks.split(',').each do |s|
       if s == 'X'
         shots << 10
-        shots << 0 if shots.size < 18
+        shots << 0 if shots.size < LAST_FRAME_FIRST_SHOT
       else
         shots << s.to_i
       end
@@ -27,11 +30,11 @@ class Game
   end
 
   def create_frames(shots)
-    shots[0..17].each_slice(2) do |first_mark, second_mark|
+    shots[0..(LAST_FRAME_FIRST_SHOT - 1)].each_slice(2) do |first_mark, second_mark|
       frame = Frame.new(first_mark, second_mark)
       @frames << frame
     end
-    frame = Frame.new(shots[18], shots[19], shots[20])
+    frame = Frame.new(shots[LAST_FRAME_FIRST_SHOT], shots[LAST_FRAME_FIRST_SHOT + 1], shots[LAST_FRAME_FIRST_SHOT + 2])
     @frames << frame
   end
 
@@ -42,7 +45,7 @@ class Game
   def cal_for_frames
     point = 0
     @frames.each_with_index do |frame, index|
-      if index == 9
+      if index == LAST_FRAME
         point += frame.cal_for_frame
       else
         next_frame = next_frame(index)
