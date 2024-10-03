@@ -52,12 +52,12 @@ class Game
         next_next_frame = next_frame(index + 1)
 
         score += if frame.strike?
-                  frame.strike_bonus(index, next_frame, next_next_frame)
-                elsif frame.spare?
-                  frame.spare_bonus(next_frame)
-                else
-                  frame.cal_frame_score
-                end
+                   frame.strike_bonus(index, next_frame, next_next_frame)
+                 elsif frame.spare?
+                   frame.spare_bonus(next_frame)
+                 else
+                   frame.cal_frame_score
+                 end
       end
     end
     score
