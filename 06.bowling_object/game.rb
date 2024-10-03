@@ -39,30 +39,19 @@ class Game
     @frames[index + 1]
   end
 
-  def strike_bonus(index)
-    return 10 + next_frame(index).first_shot.score + next_frame(index).second_shot.score if index == 8
-
-    if @frames[index].strike? && next_frame(index).strike?
-      20 + next_frame(index + 1).first_shot.score
-    else
-      10 + next_frame(index).cal_for_frame
-    end
-  end
-
-  def spare_bonus(index)
-    10 + next_frame(index).first_shot.score
-  end
-
   def cal_for_frames
     point = 0
     @frames.each_with_index do |frame, index|
       if index == 9
         point += frame.cal_for_frame
       else
+        next_frame = next_frame(index)
+        next_next_frame = next_frame(index + 1)
+
         point += if frame.strike?
-                  strike_bonus(index)
+                  frame.strike_bonus(index, next_frame, next_next_frame)
                 elsif frame.spare?
-                  spare_bonus(index)
+                  frame.spare_bonus(next_frame)
                 else
                   frame.cal_for_frame
                 end

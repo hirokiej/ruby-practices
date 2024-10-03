@@ -23,4 +23,19 @@ class Frame
   def spare?
     !strike? && cal_for_frame == 10
   end
+
+  def strike_bonus(index, next_frame, next_next_frame)
+    return 10 + next_frame.first_shot.score + next_frame.second_shot.score if index == 8
+
+    if strike? && next_frame.strike?
+      20 + next_next_frame.first_shot.score
+    else
+      10 + next_frame.cal_for_frame
+    end
+  end
+
+  def spare_bonus(next_frame)
+    10 + next_frame.first_shot.score
+  end
+
 end
