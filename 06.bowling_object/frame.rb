@@ -6,8 +6,6 @@ require_relative 'shot'
 class Frame
   attr_accessor :first_shot, :second_shot, :third_shot
 
-  BEFORE_LAST_FRAME = 8
-
   def initialize(first_mark, second_mark, third_mark = nil)
     @first_shot = Shot.new(first_mark)
     @second_shot = Shot.new(second_mark)
@@ -26,8 +24,8 @@ class Frame
     !strike? && score == 10
   end
 
-  def strike_bonus(index, next_frame, next_next_frame)
-    return 10 + next_frame.first_shot.score + next_frame.second_shot.score if index == BEFORE_LAST_FRAME
+  def strike_bonus(next_frame, next_next_frame)
+    return 10 + next_frame.first_shot.score + next_frame.second_shot.score unless next_next_frame
 
     if strike? && next_frame.strike?
       20 + next_next_frame.first_shot.score

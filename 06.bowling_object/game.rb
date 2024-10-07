@@ -50,7 +50,7 @@ class Game
         next_frame = next_frame(index)
         next_next_frame = next_frame(index + 1)
         if frame.strike?
-          frame.strike_bonus(index, next_frame, next_next_frame)
+          frame.strike_bonus(next_frame, next_next_frame)
         elsif frame.spare?
           frame.spare_bonus(next_frame)
         else
