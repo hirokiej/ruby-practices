@@ -14,7 +14,7 @@ class Frame
     @third_shot = Shot.new(third_mark)
   end
 
-  def cal_frame_score
+  def score
     [@first_shot, @second_shot, @third_shot].map(&:score).sum
   end
 
