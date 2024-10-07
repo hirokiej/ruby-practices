@@ -15,6 +15,26 @@ class Game
     create_frames(shots)
   end
 
+  def cal_total_score
+    @frames.each_with_index.sum do |frame, index|
+      if index == LAST_FRAME
+        frame.score
+      else
+        next_frame = next_frame(index)
+        next_next_frame = next_frame(index + 1)
+        if frame.strike?
+          frame.strike_bonus(next_frame, next_next_frame)
+        elsif frame.spare?
+          frame.spare_bonus(next_frame)
+        else
+          frame.score
+        end
+      end
+    end
+  end
+
+  private
+
   def remake_shots(marks)
     shots = []
 
@@ -40,23 +60,5 @@ class Game
 
   def next_frame(index)
     @frames[index + 1]
-  end
-
-  def cal_total_score
-    @frames.each_with_index.sum do |frame, index|
-      if index == LAST_FRAME
-        frame.score
-      else
-        next_frame = next_frame(index)
-        next_next_frame = next_frame(index + 1)
-        if frame.strike?
-          frame.strike_bonus(next_frame, next_next_frame)
-        elsif frame.spare?
-          frame.spare_bonus(next_frame)
-        else
-          frame.score
-        end
-      end
-    end
   end
 end
