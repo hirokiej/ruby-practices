@@ -45,7 +45,7 @@ class Game
   def cal_total_score
     @frames.each_with_index.sum do |frame, index|
       if index == LAST_FRAME
-        frame.cal_frame_score
+        frame.score
       else
         next_frame = next_frame(index)
         next_next_frame = next_frame(index + 1)
@@ -54,7 +54,7 @@ class Game
         elsif frame.spare?
           frame.spare_bonus(next_frame)
         else
-          frame.cal_frame_score
+          frame.score
         end
       end
     end
