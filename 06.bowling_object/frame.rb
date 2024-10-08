@@ -34,7 +34,7 @@ class Frame
     end
   end
 
-  def spare_bonus(next_frame)
+  def spare_score(next_frame)
     10 + next_frame.first_shot.score
   end
 end
