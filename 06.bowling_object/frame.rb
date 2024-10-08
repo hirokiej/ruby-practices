@@ -24,7 +24,7 @@ class Frame
     !strike? && score == 10
   end
 
-  def strike_bonus(next_frame, next_next_frame)
+  def strike_score(next_frame, next_next_frame)
     return 10 + next_frame.first_shot.score + next_frame.second_shot.score unless next_next_frame
 
     if strike? && next_frame.strike?
