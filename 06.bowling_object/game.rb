@@ -50,12 +50,9 @@ class Game
   end
 
   def create_frames(shots)
-    shots[0..(LAST_FRAME_FIRST_SHOT - 1)].each_slice(2) do |first_mark, second_mark|
-      frame = Frame.new(first_mark, second_mark)
-      @frames << frame
-    end
-    frame = Frame.new(shots[LAST_FRAME_FIRST_SHOT], shots[LAST_FRAME_FIRST_SHOT + 1], shots[LAST_FRAME_FIRST_SHOT + 2])
-    @frames << frame
+    normal_frame = shots[0..(LAST_FRAME_FIRST_SHOT - 1)].each_slice(2).map{|first_mark, second_mark| Frame.new(first_mark, second_mark)}
+    last_frame = Frame.new(shots[LAST_FRAME_FIRST_SHOT], shots[LAST_FRAME_FIRST_SHOT + 1], shots[LAST_FRAME_FIRST_SHOT + 2])
+    @frames = normal_frame << last_frame
   end
 
   def next_frame(index)
