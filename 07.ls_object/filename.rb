@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 class FileName
   COLUMN_NUMBER = 3
@@ -25,7 +26,3 @@ class FileName
     end
   end
 end
-
-
-file_name =FileName.new
-file_name.display
