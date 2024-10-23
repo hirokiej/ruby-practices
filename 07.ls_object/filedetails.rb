@@ -57,4 +57,8 @@ class FileDetails
   def update_time
     @file_stat.mtime.strftime('%-m %e %R')
   end
+
+  def filename
+    @files
+  end
 end
