@@ -39,7 +39,7 @@ class FileDetails
   end
 
   def hard_link
-    @file_stat.nlink
+    @file_stat.nlink.to_s
   end
 
   def owner_name
