@@ -6,7 +6,7 @@ require_relative 'filedetails'
 class FileFormat
   def initialize(files)
     @files = files
-    @file_details = @files.map{ |file| FileDetails.new(file) }
+    @file_details = @files.map { |file| FileDetails.new(file) }
   end
 
   def format_files
@@ -17,7 +17,7 @@ class FileFormat
   end
 
   def formatter(details)
-    puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} #{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])} #{details.bite_size.rjust(max_length[:size])}  #{details.update_time} #{details.filename}"
+    puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} #{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  #{details.bite_size.rjust(max_length[:size])} #{details.update_time} #{details.filename}"
   end
 
   def max_length
