@@ -34,8 +34,3 @@ class FileFormat
     }
   end
 end
-
-files = FileName.new.files
-details = FileFormat.new(files)
-
-details.format_files
