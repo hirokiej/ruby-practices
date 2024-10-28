@@ -1,13 +1,20 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require_relative 'option'
+
 class FileName
   COLUMN_NUMBER = 3
 
   attr_reader :files
 
-  def initialize
-    @files = Dir.glob('*')
+  def initialize(options)
+    @options = options
+    @files = Dir.glob('*', @options.all_files ? File::FNM_DOTMATCH : 0)
+  end
+
+  def file_reverse
+    @files.reverse!
   end
 
   def align_file_name

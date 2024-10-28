@@ -3,13 +3,15 @@
 
 require 'optparse'
 require_relative 'fileformat'
+require_relative 'option'
 
-params = ARGV.getopts('alr')
+params = Option.new
 
 def main(params)
-  files = FileName.new
+  files = FileName.new(params)
+  files.file_reverse if params.reverse_files
   file_lists = files.files
-  if params['l']
+  if params.long_format
     details = FileFormat.new(file_lists)
     details.format_files
   else
@@ -17,4 +19,5 @@ def main(params)
   end
 end
 
+files = FileName.new(params)
 main(params)
