@@ -17,7 +17,7 @@ class FileFormat
   end
 
   def formatter(details)
-    puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} #{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  #{details.bite_size.rjust(max_length[:size])} #{details.update_time} #{details.filename}"
+    puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} #{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  #{details.bite_size.rjust(max_length[:size])} #{details.update_time.rjust(max_length[:update_time])} #{details.filename}"
   end
 
   def max_length
@@ -25,12 +25,14 @@ class FileFormat
     owners = @file_details.map(&:owner_name)
     groups = @file_details.map(&:group_name)
     sizes = @file_details.map(&:bite_size)
+    update_times = @file_details.map(&:update_time)
 
     {
       link: hard_links.max_by(&:length).length,
       owner: owners.max_by(&:length).length,
       group: groups.max_by(&:length).length,
-      size: sizes.max_by(&:length).length
+      size: sizes.max_by(&:length).length,
+      update_time: update_times.max_by(&:length).length
     }
   end
 end
