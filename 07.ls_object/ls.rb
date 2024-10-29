@@ -11,6 +11,7 @@ def main(params)
   files = FileName.new(params)
   files.file_reverse if params.reverse_files
   file_lists = files.files
+
   if params.long_format
     details = FileFormat.new(file_lists)
     details.format_files
@@ -19,5 +20,4 @@ def main(params)
   end
 end
 
-files = FileName.new(params)
 main(params)

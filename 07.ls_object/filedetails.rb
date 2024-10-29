@@ -3,6 +3,7 @@
 
 require_relative 'filename'
 require 'etc'
+
 class FileDetails
   PERMISSION = {
     '0' => '---',
