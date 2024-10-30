@@ -10,6 +10,7 @@ class FileFormat
   end
 
   def format_files
+    puts "total #{total_blocks}"
     @files.each do |file|
       details = FileDetails.new(file)
       formatter(details)
@@ -17,6 +18,10 @@ class FileFormat
   end
 
   private
+
+  def total_blocks
+    @files.sum { |file| File.stat(file).blocks }
+  end
 
   def formatter(details)
     puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} "\
