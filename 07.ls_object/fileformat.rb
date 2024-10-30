@@ -23,19 +23,17 @@ class FileFormat
     "#{details.filename}"
   end
 
-  def max_length
-    hard_links = @file_details.map(&:hard_link)
-    owners = @file_details.map(&:owner_name)
-    groups = @file_details.map(&:group_name)
-    sizes = @file_details.map(&:bite_size)
-    update_times = @file_details.map(&:update_time)
+  def max_length_for(stat_details)
+    @file_details.map(&stat_details).max_by(&:length)
+  end
 
+  def max_length
     {
-      link: hard_links.max_by(&:length).length,
-      owner: owners.max_by(&:length).length,
-      group: groups.max_by(&:length).length,
-      size: sizes.max_by(&:length).length,
-      update_time: update_times.max_by(&:length).length
+      link: max_length_for(:hard_link).length,
+      owner: max_length_for(:owner_name).length,
+      group: max_length_for(:group_name).length,
+      size: max_length_for(:bite_size).length,
+      update_time: max_length_for(:update_time).length
     }
   end
 end
