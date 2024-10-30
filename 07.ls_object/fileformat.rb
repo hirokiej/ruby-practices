@@ -16,6 +16,8 @@ class FileFormat
     end
   end
 
+  private
+
   def formatter(details)
     puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} "\
     "#{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  "\
