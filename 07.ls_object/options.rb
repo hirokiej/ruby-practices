@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Option
+class Options
   attr_reader :all_files, :reverse_files, :long_format
 
   def initialize
