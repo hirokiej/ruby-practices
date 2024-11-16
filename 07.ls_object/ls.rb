@@ -5,14 +5,14 @@ require 'optparse'
 require_relative 'fileformat'
 require_relative 'options'
 
-params = Options.new
+options = Options.new
 
-def main(params)
-  files = FileList.new(params)
-  files.file_reverse if params.reverse_files
+def main(options)
+  files = FileList.new(options)
+  files.file_reverse if options.reverse_files
   file_lists = files.files
 
-  if params.long_format
+  if options.long_format
     details = FileFormat.new(file_lists)
     details.format_files
   else
@@ -20,4 +20,4 @@ def main(params)
   end
 end
 
-main(params)
+main(options)
