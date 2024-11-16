@@ -12,7 +12,7 @@ class FileFormat
     puts "total #{total_blocks}"
     @files.each do |file|
       details = FileDetails.new(file)
-      formatter(details)
+      format(details)
     end
   end
 
@@ -22,7 +22,7 @@ class FileFormat
     @files.sum { |file| File.stat(file).blocks }
   end
 
-  def formatter(details)
+  def format(details)
     puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} "\
     "#{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  "\
     "#{details.bite_size.rjust(max_length[:size])} #{details.update_time.rjust(max_length[:update_time])} "\
