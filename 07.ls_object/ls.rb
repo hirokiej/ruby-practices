@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'fileformat'
+require_relative 'fileformatter'
 require_relative 'options'
 
 options = Options.new
