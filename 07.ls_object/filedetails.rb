@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'filename'
+require_relative 'filelist'
 require 'etc'
 
 class FileDetails
