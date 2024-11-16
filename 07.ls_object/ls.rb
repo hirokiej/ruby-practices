@@ -13,7 +13,7 @@ def main(options)
   file_lists = files.files
 
   if options.long_format
-    details = FileFormat.new(file_lists)
+    details = FileFormatter.new(file_lists)
     details.format_files
   else
     files.display

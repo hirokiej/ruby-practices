@@ -2,7 +2,7 @@
 
 require_relative 'filedetails'
 
-class FileFormat
+class FileFormatter
   def initialize(files)
     @files = files
     @file_details = @files.map { |file| FileDetails.new(file) }
