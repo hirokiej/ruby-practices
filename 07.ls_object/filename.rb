@@ -2,7 +2,7 @@
 
 require_relative 'option'
 
-class FileName
+class FileList
   COLUMN_NUMBER = 3
 
   attr_reader :files

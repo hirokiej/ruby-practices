@@ -8,7 +8,7 @@ require_relative 'option'
 params = Option.new
 
 def main(params)
-  files = FileName.new(params)
+  files = FileList.new(params)
   files.file_reverse if params.reverse_files
   file_lists = files.files
 
