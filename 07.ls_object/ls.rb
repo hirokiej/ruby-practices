@@ -3,9 +3,9 @@
 
 require 'optparse'
 require_relative 'fileformat'
-require_relative 'option'
+require_relative 'options'
 
-params = Option.new
+params = Options.new
 
 def main(params)
   files = FileList.new(params)

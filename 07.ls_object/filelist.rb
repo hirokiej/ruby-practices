@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'option'
+require_relative 'options'
 
 class FileList
   COLUMN_NUMBER = 3
