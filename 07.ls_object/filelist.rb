@@ -30,7 +30,6 @@ class FileList
   end
 
   def formatted_file_list
-    aligned_files = aligned_file_list
-    aligned_files.each_slice(COLUMN_NUMBER)
+    aligned_file_list.each_slice(COLUMN_NUMBER)
   end
 end
