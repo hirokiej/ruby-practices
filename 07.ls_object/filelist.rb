@@ -13,7 +13,7 @@ class FileList
   end
 
   def display
-    short_format.each do |line|
+    formatted_file_list.each do |line|
       puts line.join(' ')
     end
   end
@@ -29,7 +29,7 @@ class FileList
     @files.map { |file| file.ljust(max_length + 1) }
   end
 
-  def short_format
+  def formatted_file_list
     aligned_files = align_file_name
     aligned_files.each_slice(COLUMN_NUMBER)
   end
