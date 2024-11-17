@@ -5,7 +5,7 @@ require 'optparse'
 require_relative 'fileformatter'
 require_relative 'options'
 
-options = Options.new
+options = Options.new(ARGV)
 
 def main(options)
   files = FileList.new(options)
