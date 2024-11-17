@@ -24,13 +24,13 @@ class FileList
 
   private
 
-  def align_file_name
+  def aligned_file_list
     max_length = @files.max_by(&:length).size
     @files.map { |file| file.ljust(max_length + 1) }
   end
 
   def formatted_file_list
-    aligned_files = align_file_name
+    aligned_files = aligned_file_list
     aligned_files.each_slice(COLUMN_NUMBER)
   end
 end
