@@ -9,7 +9,6 @@ options = Options.new(ARGV)
 
 def main(options)
   files = FileList.new(options)
-  files.file_reverse if options.reverse_files
   file_lists = files.files
 
   if options.long_format

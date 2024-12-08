@@ -10,6 +10,7 @@ class FileList
   def initialize(options)
     @options = options
     @files = Dir.glob('*', @options.all_files ? File::FNM_DOTMATCH : 0)
+    file_reverse if options.reverse_files
   end
 
   def display
