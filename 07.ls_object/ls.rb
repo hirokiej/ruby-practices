@@ -11,7 +11,7 @@ def main(options)
   files = FileList.new(options)
   file_lists = files.files
 
-  if options.long_format
+  if options.long_format?
     details = FileFormatter.new(file_lists)
     details.format_files
   else
