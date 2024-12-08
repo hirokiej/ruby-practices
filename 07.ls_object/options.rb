@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Options
-
   def initialize(args)
     @options = args.getopts('alr')
   end
