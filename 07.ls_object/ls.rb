@@ -2,20 +2,20 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'fileformatter'
+require_relative 'filelist'
+require_relative 'longfileformatter'
+require_relative 'shortfileformatter'
 require_relative 'options'
 
 options = Options.new(ARGV)
 
 def main(options)
-  files = FileList.new(options)
-  file_lists = files.files
+  files = FileList.new(options).files
 
   if options.long_format?
-    details = FileFormatter.new(file_lists)
-    details.format_files
+    LongFileFormatter.new(files).format
   else
-    files.display
+    ShortFileFormatter.new(files).format
   end
 end
 

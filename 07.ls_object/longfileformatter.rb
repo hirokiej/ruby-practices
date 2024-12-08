@@ -2,17 +2,17 @@
 
 require_relative 'filedetails'
 
-class FileFormatter
+class LongFileFormatter
   def initialize(files)
     @files = files
     @file_details = @files.map { |file| FileDetails.new(file) }
   end
 
-  def format_files
+  def format
     puts "total #{total_blocks}"
     @files.each do |file|
       details = FileDetails.new(file)
-      format(details)
+      format_details(details)
     end
   end
 
@@ -22,7 +22,7 @@ class FileFormatter
     @files.sum { |file| File.stat(file).blocks }
   end
 
-  def format(details)
+  def format_details(details)
     puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} "\
     "#{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  "\
     "#{details.bite_size.rjust(max_length[:size])} #{details.update_time.rjust(max_length[:update_time])} "\
