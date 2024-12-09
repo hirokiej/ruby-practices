@@ -13,7 +13,7 @@ def main(options)
   files = FileList.new(options).files
 
   if options.long_format?
-    LongFileFormatter.new(files).format
+    puts LongFileFormatter.new(files).format
   else
     puts ShortFileFormatter.new(files).format
   end

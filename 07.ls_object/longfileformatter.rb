@@ -9,11 +9,13 @@ class LongFileFormatter
   end
 
   def format
-    puts "total #{total_blocks}"
+    formatted_file_details = []
+    formatted_file_details << "total #{total_blocks}"
     @files.each do |file|
       details = FileDetails.new(file)
-      format_details(details)
+      formatted_file_details << format_details(details)
     end
+    formatted_file_details.join("\n")
   end
 
   private
@@ -23,7 +25,7 @@ class LongFileFormatter
   end
 
   def format_details(details)
-    puts "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} "\
+    "#{details.filetype}#{details.permission} #{details.hard_link.rjust(max_length[:link])} "\
     "#{details.owner_name.rjust(max_length[:owner])}  #{details.group_name.rjust(max_length[:group])}  "\
     "#{details.bite_size.rjust(max_length[:size])} #{details.update_time.rjust(max_length[:update_time])} "\
     "#{details.filename}"
