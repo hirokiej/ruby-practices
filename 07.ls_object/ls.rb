@@ -15,7 +15,7 @@ def main(options)
   if options.long_format?
     LongFileFormatter.new(files).format
   else
-    ShortFileFormatter.new(files).format
+    puts ShortFileFormatter.new(files).format
   end
 end
 

@@ -8,9 +8,7 @@ class ShortFileFormatter
   end
 
   def format
-    formatted_file_list.each do |line|
-      puts line.join(' ')
-    end
+    formatted_file_list.map{ |line| line.join(' ')}
   end
 
   private
