@@ -8,7 +8,7 @@ class ShortFileFormatter
   end
 
   def format
-    formatted_file_list.map{ |line| line.join(' ')}
+    formatted_file_list.map { |line| line.join(' ') }
   end
 
   private
