@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'filedetails'
+require_relative 'file_details'
 
 class LongFileFormatter
   def initialize(files)

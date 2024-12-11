@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require_relative 'filelist'
-require_relative 'longfileformatter'
-require_relative 'shortfileformatter'
+require_relative 'file_list'
+require_relative 'long_file_formatter'
+require_relative 'short_file_formatter'
 require_relative 'options'
 
 options = Options.new(ARGV)
