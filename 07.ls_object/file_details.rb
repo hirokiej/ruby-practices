@@ -15,13 +15,13 @@ class FileDetails
   }.freeze
 
   FILETYPE = {
-    '01' => 'p',
-    '02' => 'c',
-    '04' => 'd',
-    '06' => 'b',
-    '10' => '-',
-    '12' => 'l',
-    '14' => 's'
+    'fifo' => 'p',
+    'characterSpecial' => 'c',
+    'directory' => 'd',
+    'blockSpecial' => 'b',
+    'file' => '-',
+    'link' => 'l',
+    'socket' => 's'
   }.freeze
 
   def initialize(files)
@@ -30,7 +30,7 @@ class FileDetails
   end
 
   def filetype
-    FILETYPE[@file_stat.mode.to_s(8)[0..1]] || ' '
+    FILETYPE[@file_stat.ftype] || ' '
   end
 
   def permission
